@@ -1,0 +1,94 @@
+<html>
+<head>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&ext=.js"></script>
+</head>
+<body style="background-color: purple;">
+    <div class="container">
+        <svg height="210" width="500" viewBox="0 0 400 900" xmlns="http://www.w3.org/2000/svg">
+            <polyline 
+              id="route-polygon"
+              style="fill:none;stroke:orangered;stroke-width: 0.0001" />
+          </svg>
+    </div>
+</body>
+<script>
+
+/**
+  *@param latLng object with properties lat and lng(of the coordinate)
+  *@return object with properties x and y(of the translated latLng)
+  **/
+function latLng2point({lat, lng}){
+    const latitude = lat();
+    const longitude = lng();
+  return {
+          x:(longitude+180)*(256/360),
+          y:(256/2)-(256*Math.log(Math.tan((Math.PI/4)
+                     +((latitude*Math.PI/180)/2)))/(2*Math.PI))
+         };
+}
+
+function poly_gm2svg(gmPaths) {
+    var point,
+    gmPath,
+    svgPath,
+    svgPaths = [],
+        minX = 256,
+        minY = 256,
+        maxX = 0,
+        maxY = 0;
+
+    for (var pp = 0; pp < gmPaths.length; ++pp) {
+        gmPath = gmPaths[pp], svgPath = [];
+        for (var p = 0; p < gmPath.length; ++p) {
+            point = latLng2point(gmPath[p]);
+            minX = Math.min(minX, point.x);
+            minY = Math.min(minY, point.y);
+            maxX = Math.max(maxX, point.x);
+            maxY = Math.max(maxY, point.y);
+            svgPath.push([point.x, point.y].join(','));
+        }
+
+
+        svgPaths.push(svgPath.join(' '))
+
+
+    }
+    return {
+        path: svgPaths.join(' '),
+        x: minX,
+        y: minY,
+        width: maxX - minX,
+        height: maxY - minY
+    };
+
+}
+
+async function getStravaData() {
+    const token = 'de47d7aa9fafe2706085c6aa225b7aa7498afd7f';
+    const id = '13214566';
+    const response = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=100', { headers: {Authorization: `Bearer ${token}`}} );
+    const activities = await response.json();
+
+    return activities.filter(a => a.type === 'Run');
+}
+
+async function initialize() {
+  const stuff = await getStravaData();
+    const maps = stuff.map(activity => activity.map);
+  const path = google.maps.geometry.encoding.decodePath(maps[0].summary_polyline);
+  
+  const points = path.map(pair => latLng2point(pair));
+  const stringPoints = poly_gm2svg([path]);
+  
+  const polyline = document.getElementById('route-polygon');
+  
+  polyline.setAttribute('points', stringPoints.path);
+  document.getElementsByTagName('svg')[0].setAttribute('viewBox', [stringPoints.x, stringPoints.y, stringPoints.width, stringPoints.height].join(' '));
+}
+
+document.addEventListener("DOMContentLoaded", () => initialize());
+
+
+
+</script>
+</html>
