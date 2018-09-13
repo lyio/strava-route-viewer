@@ -22,10 +22,11 @@ export class RoutesListContainer extends React.Component {
 
     async _getStravaData() {
         const token = '';
-        const response = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=100', { headers: {Authorization: `Bearer ${token}`}} );
+        const response = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=200', { headers: {Authorization: `Bearer ${token}`}} );
         const activities = await response.json();
-    
-        return activities.filter(a => a.type === 'Run');
+        const filteredActivities = activities.filter(a => a.type === 'Run' && a.moving_time > 2000).slice(0, 30);
+        
+        return filteredActivities;
     }
     
     async initialize() {

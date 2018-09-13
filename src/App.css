@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding-top: 60px;
 }
 
 .App-logo {
@@ -25,4 +26,17 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@media print {
+  .App-header {
+    display: none;
+  }
+
+  .App {
+    -webkit-print-color-adjust: exact;
+    background-color: rgb(46, 71, 153) !important; 
+    width: 297mm;
+    max-height: 420mm;
+  }
 }
