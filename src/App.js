@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-intro">
-          <RoutesListContainer />
+          <RoutesListContainer token={process.env.REACT_APP_STRAVA_TOKEN}/>
         </div>
       </div>
     );

@@ -20,8 +20,7 @@ export class RoutesListContainer extends React.Component {
         )
     }
 
-    async _getStravaData() {
-        const token = '';
+    async _getStravaData(token) {
         const athleteResponse = await fetch(`https://www.strava.com/api/v3/athlete`, { headers: {Authorization: `Bearer ${token}`}} );
         const athlete = await athleteResponse.json();
         
@@ -36,7 +35,7 @@ export class RoutesListContainer extends React.Component {
     }
     
     async initialize() {
-        const [stuff, athlete] = await this._getStravaData();
+        const [stuff, athlete] = await this._getStravaData(this.props.token);
         const maps = stuff.map(activity => { return { map: activity.map, isRace: activity.workout_type === 1};});
 
         this.setState(state => { return {routes: maps, athleteStats: athlete };})
