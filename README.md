@@ -1,3 +1,9 @@
+Display Strava routes as art.
+
+This project idea has been blatantly stolen from https://www.madewithsisu.com/.
+
+I saw their prints and wanted to see how something like that could be built.
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
