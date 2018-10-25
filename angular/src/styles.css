@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+.App {
+    text-align: center;
+    padding-top: 60px;
+    margin: auto;
+    background-color: rgb(43, 51, 77);
+    margin: auto;
+    width: 80%;
+  }
+  
+  .poster-footer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  @media print {
+    .App {
+      -webkit-print-color-adjust: exact;
+      background-color: rgb(43, 51, 77) !important;
+      width: 297mm;
+      max-height: 420mm;
+      padding-top: 20px;
+    }
+
+    svg {
+        height: 40mm;
+    }
+  
+    .poster-footer {
+      position: initial;
+    }
+  }

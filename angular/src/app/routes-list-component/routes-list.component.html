@@ -1,0 +1,6 @@
+<div class="routes-container">
+    <div *ngFor="let route of transformedRoutes">
+      <app-route [points]="route"></app-route>
+    </div>
+</div>
+<app-poster-footer [athlete]="athlete"></app-poster-footer>

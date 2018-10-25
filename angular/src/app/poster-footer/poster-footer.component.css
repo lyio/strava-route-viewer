@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Inline');
+
+.poster-footer {
+    height: 78px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Bungee Inline', cursive;
+}
+
+.poster-footer .athlete-data {
+    text-align: left;
+
+
+}
+
+.poster-footer .athlete-data .athlete-label {
+    color: lightgray;
+    font-size: 12px;
+}
+
+.poster-footer .athlete-data .athlete-value {
+    color: lightgray;
+    font-size: 24px;
+    margin-top: -22px;
+}
