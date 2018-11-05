@@ -1,0 +1,24 @@
+<h2>Configuration</h2>
+<form>
+  <div>
+    <label>Strava token:</label>
+    <input [value]="configurationModel.token" type="text" placeholder="Token" #token/>
+  </div>
+  <div>
+    <label>Runs: </label>
+    <input [checked]="includeRuns" (click)="changeRuns()" type="checkbox"/>
+    <label>Rides: </label>
+    <input [checked]="includeRides" (click)="changeRides()" type="checkbox"/>
+  </div>
+  <div>
+    <label>Min length</label>
+    <input type="number" min="10" max="600" [value]="convertedDuration" step="1" #duration/><label>minutes</label>
+  </div>
+  <div>
+    <label>Number of activities</label>
+    <input type="number" min="30" max="600" [value]="configurationModel.activityCount" step="1" #count/>
+    </div>
+  <div>
+    <button (click)="displayRoutes(token, duration, count)">Display Routes</button>
+  </div>
+</form>

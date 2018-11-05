@@ -1,0 +1,16 @@
+.App {
+    padding-top: 60px;
+    display: flex;
+    flex-direction: row;
+  }
+
+.App .config-form {
+    width: 20%;
+}
+
+.App .app-routes-list {
+    text-align: center;
+    background-color: rgb(43, 51, 77);
+    margin: auto;
+    width: 80%;
+}

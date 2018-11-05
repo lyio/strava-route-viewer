@@ -1,4 +1,5 @@
 <div class="App">
-  <app-routes-list-container>
+  <app-configuration (configuration)="configChanged($event)" class="config-form"></app-configuration>
+  <app-routes-list-container [configuration]="stravaConfiguration" class="app-routes-list">
   </app-routes-list-container>
 </div>

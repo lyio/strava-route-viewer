@@ -1,13 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-.App {
-    text-align: center;
-    padding-top: 60px;
-    margin: auto;
-    background-color: rgb(43, 51, 77);
-    margin: auto;
-    width: 80%;
-  }
-  
   .poster-footer {
     position: absolute;
     top: 0;

@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { RoutesListComponent } from './routes-list-component/routes-list.component';
 import { RouteComponent } from './route/route.component';
 import { PosterFooterComponent } from './poster-footer/poster-footer.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { PosterFooterComponent } from './poster-footer/poster-footer.component';
     RoutesListContainerComponent,
     RoutesListComponent,
     RouteComponent,
-    PosterFooterComponent
+    PosterFooterComponent,
+    ConfigurationComponent
   ],
   imports: [
     BrowserModule,

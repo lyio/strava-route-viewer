@@ -3,26 +3,26 @@ import { HttpClient} from '@angular/common/http';
 import { Athlete } from './model/athlete';
 import { Observable } from 'rxjs';
 import { Activity } from './model/acitvity';
+import { Configuration } from './model/configuration';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StravaApiServiceService {
-  private token = '';
   private BASE_API = 'https://www.strava.com/api/v3';
-  private header = { headers: {Authorization: `Bearer ${this.token}`}};
+  private header(token) { return {headers: {Authorization: `Bearer ${token}`}}}
 
   constructor(private http: HttpClient) {
   }
 
-  getAthleteData(): Observable<Athlete> {
+  getAthleteData({ token }: Configuration): Observable<Athlete> {
     let athlete;
     return new Observable<Athlete>(o => {
-      fetch(`${this.BASE_API}/athlete`, this.header)
+      fetch(`${this.BASE_API}/athlete`, this.header(token))
         .then(athleteResponse => athleteResponse.json())
         .then(athleteData => {
           athlete = athleteData;
-          return fetch(`${this.BASE_API}/athletes/${athleteData.id}/stats`, this.header);
+          return fetch(`${this.BASE_API}/athletes/${athleteData.id}/stats`, this.header(token));
         })
         .then(athleteStatsResponse => athleteStatsResponse.json())
         .then(athleteStatsData => o.next(new Athlete(
@@ -34,12 +34,13 @@ export class StravaApiServiceService {
     });
   }
 
-  getActivities(): Observable<Array<Activity>> {
+  getActivities(config: Configuration): Observable<Array<Activity>> {
     return new Observable<Array<any>>(o => {
-      this.loadActivities(1, new Array())
+      this.loadActivities(config.token, 1, new Array())
       .then(activities => o.next(
         activities
-          .filter(a => a.type === 'Run' && a.moving_time > 1800 && a.map.summary_polyline != null).slice(0, 42)
+          .filter(a => this.filterActivities(config, a))
+          .slice(0, config.activityCount)
           .map(a => {
             return {
               map: a.map,
@@ -49,12 +50,37 @@ export class StravaApiServiceService {
       });
   }
 
-  private loadActivities(page: number, activities: Array<Activity>) {
-    return fetch(`${this.BASE_API}/athlete/activities?page=${page}&per_page=200`, this.header)
+  private filterActivities(config: Configuration, a) {
+    const includeRuns = config.activityTypes.get('Runs');
+    const includeRides = config.activityTypes.get('Rides');
+
+    let result = a.map.summary_polyline != null &&
+      a.moving_time >= config.activityDuration;
+
+    if (!result) {
+      return false;
+    }
+
+    if (includeRides && includeRuns) {
+      result = result && (a.type === 'Run' || a.type === 'Ride');
+    } else if (includeRuns && !includeRides) {
+      result = result && a.type === 'Run';
+    } else if (includeRides && !includeRuns) {
+      result = result && a.type === 'Ride';
+    } else {
+      result = false;
+    }
+
+    return result;
+  }
+
+  private loadActivities(token, page: number, activities: Array<Activity>) {
+    return fetch(`${this.BASE_API}/athlete/activities?page=${page}&per_page=200`, this.header(token))
       .then(response => response.json())
       .then(acts => {
         const combinedActivities = activities.concat(acts);
-        return acts.length === 0 ? combinedActivities : this.loadActivities(page + 1, combinedActivities);
-      });
+        return acts.length === 0 ? combinedActivities : this.loadActivities(token, page + 1, combinedActivities);
+      })
+      .catch(e => console.error(e));
   }
 }
