@@ -14,12 +14,25 @@ export class RouteComponent implements OnInit {
 
   private svgStyle;
 
+  private style: object;
+
+  @Input()
+  private height = 200;
+
+  @Input()
+  private width = 190;
+
+  @Input()
+  private scale = 1.0;
+
   constructor() { }
 
   ngOnInit() {
     this.viewBox = this.calculateViewBox(this.points.path);
 
     this.svgStyle = this.getStyle(this.points);
+
+    // this.style = { transform: `scale(${this.scale})`};
   }
 
   private calculateViewBox(route) {

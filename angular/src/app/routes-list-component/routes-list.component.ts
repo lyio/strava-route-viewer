@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Athlete } from '../model/athlete';
 import { MapToSvgMapperService } from '../map-to-svg-mapper.service';
+import { Activity } from '../model/acitvity';
 
 @Component({
   selector: 'app-routes-list',
@@ -10,12 +11,15 @@ import { MapToSvgMapperService } from '../map-to-svg-mapper.service';
 export class RoutesListComponent implements OnInit, OnChanges {
 
   @Input()
-  routes: Array<any> = [];
+  routes: Array<Activity> = [];
 
   @Input()
   athlete: Athlete;
 
   private transformedRoutes: Array<any> = [];
+  private scaling = 1;
+  private height;
+  private width;
 
   constructor(private mapToSvgMapper: MapToSvgMapperService) { }
 
@@ -30,6 +34,10 @@ export class RoutesListComponent implements OnInit, OnChanges {
           isRace: route.isRace
         };
       });
+
+      // this.scaling = Math.abs(40 / this.transformedRoutes.length);
+      this.height = 200 * this.scaling;
+      this.width = 180 * this.scaling;
     }
   }
 }

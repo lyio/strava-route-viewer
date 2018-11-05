@@ -1,24 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { StravaApiServiceService } from '../strava-api-service.service';
 import { Athlete } from '../model/athlete';
+import { Observable } from 'rxjs';
+import { Activity } from '../model/acitvity';
 
 @Component({
   selector: 'app-routes-list-container',
-  templateUrl: './routes-list-container.component.html',
+  template: `<div>
+    <app-routes-list [routes]="activities" [athlete]="athlete | async"></app-routes-list>
+    </div>`,
   styleUrls: ['./routes-list-container.component.css']
 })
 export class RoutesListContainerComponent implements OnInit {
 
-  private activities;
+  private activities: Array<Activity>;
 
-  private athlete: Athlete;
+  private athlete: Observable<Athlete>;
 
   constructor(private stravaApiService: StravaApiServiceService) { }
 
-  async ngOnInit() {
-    this.athlete = await this.stravaApiService.getAthleteData();
-    this.activities = await this.stravaApiService.getActivities();
-    console.dir(this.activities);
-    console.dir(this.athlete);
+  ngOnInit() {
+    this.athlete = this.stravaApiService.getAthleteData();
+    this.stravaApiService.getActivities().subscribe(a => {
+      this.activities = a;
+      console.dir(this.activities);
+    });
   }
 }

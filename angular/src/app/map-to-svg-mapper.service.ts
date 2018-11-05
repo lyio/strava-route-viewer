@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { decode } from '@mapbox/polyline';
+import { ActivityMap } from './model/activity-map';
 
 export interface Path {
   x: number;
@@ -21,13 +22,13 @@ export class MapToSvgMapperService {
 
   constructor() { }
 
-  extract(route) {
+  extract(route: ActivityMap) {
     return this.mapPathtoSvGCoordinates(
       decode(route.summary_polyline)
     );
   }
 
-  private latLng2point([latitude, longitude]): Path {
+  private latLng2point([latitude, longitude]: Array<number>): Path {
     return {
       x: (longitude + 180) * (256 / 360),
       y: (256 / 2) - (256 * Math.log(Math.tan((Math.PI / 4)
