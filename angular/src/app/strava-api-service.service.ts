@@ -76,7 +76,11 @@ export class StravaApiServiceService {
 
   private loadActivities(token, page: number, activities: Array<Activity>) {
     return fetch(`${this.BASE_API}/athlete/activities?page=${page}&per_page=200`, this.header(token))
-      .then(response => response.json())
+      .then(response => {
+        return response.status === 200 ?
+          response.json() :
+          Promise.reject(new Error(`${response.status} - ${response.statusText}`));
+      })
       .then(acts => {
         const combinedActivities = activities.concat(acts);
         return acts.length === 0 ? combinedActivities : this.loadActivities(token, page + 1, combinedActivities);

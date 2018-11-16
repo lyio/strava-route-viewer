@@ -8,7 +8,8 @@ react/node_modules/
 /coverage
 
 # production
-/build
+/react/build
+/angular/dist
 
 # misc
 .DS_Store

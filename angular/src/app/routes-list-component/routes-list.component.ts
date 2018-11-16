@@ -16,10 +16,10 @@ export class RoutesListComponent implements OnInit, OnChanges {
   @Input()
   athlete: Athlete;
 
-  private transformedRoutes: Array<any> = [];
+  transformedRoutes: Array<any> = [];
   private scaling = 1;
-  private height;
-  private width;
+  height: number;
+  width: number;
 
   constructor(private mapToSvgMapper: MapToSvgMapperService) { }
 

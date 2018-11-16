@@ -10,20 +10,20 @@ export class RouteComponent implements OnInit {
   @Input()
   points: any;
 
-  private viewBox;
+  viewBox;
 
-  private svgStyle;
+  svgStyle;
 
-  private style: object;
-
-  @Input()
-  private height = 200;
+  style: object;
 
   @Input()
-  private width = 190;
+  height = 200;
 
   @Input()
-  private scale = 1.0;
+  width = 190;
+
+  @Input()
+  scale = 1.0;
 
   constructor() { }
 
@@ -31,8 +31,6 @@ export class RouteComponent implements OnInit {
     this.viewBox = this.calculateViewBox(this.points.path);
 
     this.svgStyle = this.getStyle(this.points);
-
-    // this.style = { transform: `scale(${this.scale})`};
   }
 
   private calculateViewBox(route) {

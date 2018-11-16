@@ -15,11 +15,11 @@ export class RoutesListContainerComponent implements OnInit, OnChanges {
   @Input()
   configuration: Configuration;
 
-  private activities: Array<Activity> = [];
+  activities: Array<Activity> = [];
 
-  private athlete: Observable<Athlete>;
+  athlete: Observable<Athlete>;
 
-  private showSpinner = false;
+  showSpinner = false;
 
   constructor(private stravaApiService: StravaApiServiceService) { }
 
