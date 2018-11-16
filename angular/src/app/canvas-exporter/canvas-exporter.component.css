@@ -1,0 +1,7 @@
+#canvas-container {
+    transform: scale(0.15) translate(-280%, -280%);
+}
+
+.canvas-exporter {
+    padding-top: 24px
+}

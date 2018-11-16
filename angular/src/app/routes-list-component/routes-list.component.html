@@ -1,6 +1,6 @@
+<app-poster-footer *ngIf="athlete" [athlete]="athlete"></app-poster-footer>
 <div class="routes-container">
     <span *ngFor="let route of transformedRoutes">
       <app-route [height]="height" [width]="width" [points]="route"></app-route>
     </span>
 </div>
-<app-poster-footer [athlete]="athlete"></app-poster-footer>

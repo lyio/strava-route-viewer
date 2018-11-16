@@ -1,5 +1,8 @@
 <div class="App">
-  <app-configuration (configuration)="configChanged($event)" class="config-form"></app-configuration>
+  <div class="sidebar">
+    <app-configuration (configuration)="configChanged($event)" class="config-form"></app-configuration>
+    <app-canvas-exporter></app-canvas-exporter>
+  </div>
   <app-routes-list-container [configuration]="stravaConfiguration">
   </app-routes-list-container>
 </div>

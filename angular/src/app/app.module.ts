@@ -17,6 +17,7 @@ import { RouteComponent } from './route/route.component';
 import { PosterFooterComponent } from './poster-footer/poster-footer.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { CanvasExporterComponent } from './canvas-exporter/canvas-exporter.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
     RoutesListComponent,
     RouteComponent,
     PosterFooterComponent,
-    ConfigurationComponent
+    ConfigurationComponent,
+    CanvasExporterComponent
   ],
   imports: [
     BrowserModule,

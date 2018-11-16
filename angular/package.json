@@ -25,6 +25,7 @@
     "@mapbox/polyline": "^1.0.0",
     "@types/mapbox__polyline": "^1.0.0",
     "core-js": "^2.5.4",
+    "html2canvas": "^1.0.0-alpha.12",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },

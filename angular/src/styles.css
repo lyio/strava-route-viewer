@@ -1,13 +1,6 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 /* You can add global styles to this file, and also import other style files */
-  .poster-footer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  
   @media print {
     .App {
       -webkit-print-color-adjust: exact;
