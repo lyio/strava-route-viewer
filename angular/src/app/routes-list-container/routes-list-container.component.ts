@@ -7,9 +7,7 @@ import { Configuration } from '../model/configuration';
 
 @Component({
   selector: 'app-routes-list-container',
-  template: `<div>
-    <app-routes-list [routes]="activities" [athlete]="athlete | async"></app-routes-list>
-    </div>`,
+  templateUrl: './routes-list-container.component.html',
   styleUrls: ['./routes-list-container.component.css']
 })
 export class RoutesListContainerComponent implements OnInit, OnChanges {
@@ -21,6 +19,8 @@ export class RoutesListContainerComponent implements OnInit, OnChanges {
 
   private athlete: Observable<Athlete>;
 
+  private showSpinner = false;
+
   constructor(private stravaApiService: StravaApiServiceService) { }
 
   ngOnInit() {
@@ -28,9 +28,11 @@ export class RoutesListContainerComponent implements OnInit, OnChanges {
 
   ngOnChanges({ configuration }: SimpleChanges) {
     if (configuration && configuration.currentValue) {
+      this.showSpinner = true;
       this.athlete = this.stravaApiService.getAthleteData(configuration.currentValue);
       this.stravaApiService.getActivities(configuration.currentValue).subscribe(a => {
         this.activities = a;
+        this.showSpinner = false;
       });
     }
   }

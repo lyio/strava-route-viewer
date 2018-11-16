@@ -2,3 +2,16 @@ h2 {
     width: 80%;
     margin: auto;
 }
+
+mat-checkbox {
+    margin-right: 12px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+button {
+    width: 60%;
+    margin: auto;
+}

@@ -1,3 +1,4 @@
 <div>
-  <app-routes-list [routes]="activities | async" [athlete]="athlete | async"></app-routes-list>
+  <mat-spinner *ngIf="showSpinner" diameter="64"></mat-spinner>
+  <app-routes-list [routes]="activities" [athlete]="athlete | async" class="app-routes-list"></app-routes-list>
 </div>

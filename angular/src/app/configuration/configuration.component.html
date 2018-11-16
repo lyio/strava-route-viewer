@@ -1,24 +1,32 @@
 <h2>Configuration</h2>
-<form>
-  <div>
-    <label>Strava token:</label>
-    <input [value]="configurationModel.token" type="text" placeholder="Token" #token/>
+<form [formGroup]="form" (ngSubmit)="displayRoutes(form.value)">
+  <div class="form-group">
+    <mat-form-field floatLabel="'always'">
+      <mat-label>Strava token</mat-label>
+      <input matInput [formControl]="form.controls['token']" type="text"/>
+      <mat-hint>Enter the Strava API token</mat-hint>
+      <mat-error>This is required</mat-error>
+    </mat-form-field>
   </div>
-  <div>
-    <label>Runs: </label>
-    <input [checked]="includeRuns" (click)="changeRuns()" type="checkbox"/>
-    <label>Rides: </label>
-    <input [checked]="includeRides" (click)="changeRides()" type="checkbox"/>
+  <div class="form-group">
+    <mat-checkbox [formControl]="form.controls['includeRuns']" [labelPosition]="'before'">Runs:</mat-checkbox>
+    <mat-checkbox [formControl]="form.controls['includeRides']" [labelPosition]="'before'">Rides:</mat-checkbox>
   </div>
-  <div>
-    <label>Min length</label>
-    <input type="number" min="10" max="600" [value]="convertedDuration" step="1" #duration/><label>minutes</label>
+  <div class="form-group">
+    <mat-form-field floatLabel="'always'">
+        <mat-label>Min activity length</mat-label>
+        <input matInput [formControl]="form.controls['duration']" type="number" min="10" max="600" step="1" #duration/>
+        <mat-hint>Min 10 and max 10h</mat-hint>
+        <mat-error>Has to be between 10 and 600</mat-error>
+    </mat-form-field>
   </div>
-  <div>
-    <label>Number of activities</label>
-    <input type="number" min="30" max="600" [value]="configurationModel.activityCount" step="1" #count/>
-    </div>
-  <div>
-    <button (click)="displayRoutes(token, duration, count)">Display Routes</button>
+  <div class="form-group">
+    <mat-form-field floatLabel="'always'">
+        <mat-label>Number of activities</mat-label>
+        <input matInput [formControl]="form.controls['count']" type="number" min="30" max="120" step="1" #count/>
+        <mat-hint>Max is 120</mat-hint>
+        <mat-error>This is required</mat-error>
+    </mat-form-field>
   </div>
+  <button [disabled]="!form.valid" mat-raised-button type="submit">Display Routes</button>
 </form>

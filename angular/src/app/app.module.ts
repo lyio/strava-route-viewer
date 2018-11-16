@@ -1,5 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { RoutesListContainerComponent } from './routes-list-container/routes-list-container.component';
@@ -9,6 +16,7 @@ import { RoutesListComponent } from './routes-list-component/routes-list.compone
 import { RouteComponent } from './route/route.component';
 import { PosterFooterComponent } from './poster-footer/poster-footer.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,10 +29,19 @@ import { ConfigurationComponent } from './configuration/configuration.component'
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   providers: [
-    HttpClient
+    HttpClient,
+    FormBuilder
   ],
   bootstrap: [AppComponent]
 })
