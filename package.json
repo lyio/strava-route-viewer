@@ -1,0 +1,25 @@
+{
+  "name": "strava-route-printer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd angular && npm install && cd ../server && npm install && cd .. && npm run build:all",
+    "start": "node ./publish/server.js",
+    "build:client": "cd angular && npm run build",
+    "build:server": "cd server && npm run build",
+    "prebuild:all": "rm -rf publish",
+    "build:all": "npm run build:client && npm run build:server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyio/strava-route-viewer.git"
+  },
+  "author": "lyio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lyio/strava-route-viewer/issues"
+  },
+  "homepage": "https://github.com/lyio/strava-route-viewer#readme"
+}

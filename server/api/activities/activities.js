@@ -1,9 +1,9 @@
-const got = require('got');
+import * as got from 'got';
 
 const BASE_API = 'https://www.strava.com/api/v3';
 const header = (token) => { return { Authorization: `Bearer ${token}`}};
 
-const Activities = {
+export const Activities = {
     get: (ctx) => {
         return getAthleteData();
     }
@@ -17,5 +17,3 @@ async function getAthleteData() {
     const response = await got.get(`${BASE_API}/athlete`, { headers: header(''), json: true});
     return response.body;
 }
-
-module.exports = Activities;
