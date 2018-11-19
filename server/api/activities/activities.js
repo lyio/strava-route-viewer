@@ -1,4 +1,4 @@
-import * as got from 'got';
+const got = require('got');
 
 const BASE_API = 'https://www.strava.com/api/v3';
 const header = (token) => { return { Authorization: `Bearer ${token}`}};

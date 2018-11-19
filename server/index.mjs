@@ -1,6 +1,6 @@
-import * as server from 'server';
-import {Activities} from './api/activities/activities';
 const Strava = require('./api/strava/strava');
+const server = require('server');
+const Activities =  require('./api/activities/activities');
 
 const { get } = server.router;
 const { render } = server.reply;

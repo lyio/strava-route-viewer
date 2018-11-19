@@ -4,12 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "cd angular && npm install && cd ../server && npm install && cd .. && npm run build:all",
-    "start": "node ./publish/server.js",
-    "build:client": "cd angular && npm run build",
+    "preinstall": "cd ./server && npm install",
+    "postinstall": "npm run build:server",
+    "start": "node ./server/index.js",
     "build:server": "cd server && npm run build",
-    "prebuild:all": "rm -rf publish",
-    "build:all": "npm run build:client && npm run build:server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,7 +25,5 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "strava-route-client": "file:angular",
-    "strava-route-server": "file:server"
   }
 }
