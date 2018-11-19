@@ -1,4 +1,5 @@
 <h2>Configuration</h2>
+<button mat-raised-button (click)="startStravaWorkflow()">Login with Strava</button>
 <form [formGroup]="form" (ngSubmit)="displayRoutes(form.value)">
   <div class="form-group">
     <mat-form-field floatLabel="'always'">

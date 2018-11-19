@@ -1,5 +1,6 @@
 import * as server from 'server';
 import {Activities} from './api/activities/activities';
+const Strava = require('./api/strava/strava');
 
 const { get } = server.router;
 const { render } = server.reply;
@@ -7,15 +8,10 @@ const { render } = server.reply;
 // Launch server with options and a couple of routes
 const home = get('/', ctx => render('index.html'));
 const api = [
-    get('/api/strava/authorize', ctx => {
-        console.log(ctx.session.token);
-        ctx.session.token = '12345764351'
-        return 'look in the session';
-    }),
+    get(Strava.AUTHORIZE_URL, Strava.authorize),
+    get(Strava.REDIRECT_URL, Strava.redirect),
     get('/api/activities', Activities.get)
 ];
-const options = {
-    views: './angular/dist/strava-route-printer/',
-    public: './angular/dist/strava-route-printer/'
-};
-server(options, home, api);
+
+const routes = [home, api];
+server({ security: { csrf: false }, views: './public'}, ...routes);

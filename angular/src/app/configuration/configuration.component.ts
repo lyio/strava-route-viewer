@@ -55,12 +55,9 @@ export class ConfigurationComponent implements OnInit {
   ngOnInit() {
   }
 
-  changeRuns() {
-    this.includeRuns = !this.includeRuns;
-  }
-
-  changeRides() {
-    this.includeRides = !this.includeRides;
+  startStravaWorkflow() {
+    window.open('/api/strava/authorize');
+    return false;
   }
 
   displayRoutes(form: ConfigurationFormGroup) {

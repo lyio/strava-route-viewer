@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, SimpleChange, SimpleChanges, OnChanges } from '@angular/core';
 import { StravaApiServiceService } from '../strava-api-service.service';
 import { Athlete } from '../model/athlete';
-import { Observable } from 'rxjs';
 import { Activity } from '../model/acitvity';
 import { Configuration } from '../model/configuration';
 
@@ -17,7 +16,7 @@ export class RoutesListContainerComponent implements OnInit, OnChanges {
 
   activities: Array<Activity> = [];
 
-  athlete: Observable<Athlete>;
+  athlete: Athlete;
 
   showSpinner = false;
 
@@ -29,9 +28,10 @@ export class RoutesListContainerComponent implements OnInit, OnChanges {
   ngOnChanges({ configuration }: SimpleChanges) {
     if (configuration && configuration.currentValue) {
       this.showSpinner = true;
-      this.athlete = this.stravaApiService.getAthleteData(configuration.currentValue);
+      // this.athlete = this.stravaApiService.getAthleteData(configuration.currentValue);
       this.stravaApiService.getActivities(configuration.currentValue).subscribe(a => {
-        this.activities = a;
+        this.activities = a.activities;
+        this.athlete = a;
         this.showSpinner = false;
       });
     }

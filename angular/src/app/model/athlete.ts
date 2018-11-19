@@ -1,3 +1,5 @@
+import { Activity } from "./acitvity";
+
 export class Athlete {
     public name: string;
 
@@ -5,17 +7,12 @@ export class Athlete {
 
     public time: number;
 
-    constructor(firstName = '', lastName = '', distance = 0, elapsedTime = 0) {
-        this.name = `${firstName} ${lastName}`;
-        this.distance = this._convertToKm(distance);
-        this.time = this._convertToHours(elapsedTime);
-    }
+    public activities: Array<Activity>;
 
-    private _convertToKm(distance) {
-        return Math.floor(distance / 1000);
-    }
-
-    private _convertToHours(elapsedTime) {
-        return Math.floor(elapsedTime / 3600);
+    constructor(name = '', distance = 0, elapsedTime = 0, activities: Array<Activity> = []) {
+        this.name = name;
+        this.distance = distance;
+        this.time = elapsedTime;
+        this.activities = activities;
     }
 }
