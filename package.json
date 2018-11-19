@@ -25,5 +25,9 @@
   "devDependencies": {
     "@angular/cli": "^7.0.6",
     "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "strava-route-client": "file:angular",
+    "strava-route-server": "file:server"
   }
 }
