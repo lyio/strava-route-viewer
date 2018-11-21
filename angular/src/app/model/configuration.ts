@@ -5,7 +5,6 @@ export class Configuration {
     public activityCount: number;
 
     constructor() {
-        this.activityCount = 42;
         this.token = '';
         this.activityTypes = new Map<string, boolean>();
     }
