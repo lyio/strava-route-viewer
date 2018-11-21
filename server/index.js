@@ -21,6 +21,7 @@ const corsExpress = require('cors')({
   
   // Make the express middleware compatible with server
 const cors = server.utils.modern(corsExpress);
+console.log('CORS Client domain: ' + process.env.CLIENT_DOMAIN);
 
 const routes = [home, api];
 server({ security: { csrf: false } }, cors, ...routes);
