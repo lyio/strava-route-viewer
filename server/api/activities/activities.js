@@ -1,17 +1,24 @@
 const got = require('got');
+const { json, status } = require('server').reply;
 
 const BASE_API = 'https://www.strava.com/api/v3';
 const header = (token) => { return { Authorization: `Bearer ${token}`}};
 
 const Activities = {
-    get: async ({ query }) => {
-        return JSON.stringify(await getAthleteData(query));
+    ACTIVITIES_URL: '/api/activities',
+    get: async ({ query, headers }) => {
+      try {
+        return json(await getAthleteData(query, headers));
+      } catch (err){
+        console.log(err.message);
+        return status(500);
+      }
     }
 }
 
-async function getAthleteData(query) {
+async function getAthleteData(query, headers) {
     const config = {
-        token: '',
+        token: headers.accesstoken,
         activityCount: query.count || 42,
         activityDuration: query.duration || 1800,
         activityTypes: {
@@ -19,9 +26,10 @@ async function getAthleteData(query) {
             Rides: !!query.rides
         }
     };
-    const athleteResponse = await got.get(`${BASE_API}/athlete`, requestOptions);
+    const athleteResponse = await got.get(`${BASE_API}/athlete`, requestOptions(config.token));
+    console.log(athleteResponse);
     const athleteData = athleteResponse.body;
-    const dataResponse = await got.get(`${BASE_API}/athletes/${athleteData.id}/stats`, requestOptions);
+    const dataResponse = await got.get(`${BASE_API}/athletes/${athleteData.id}/stats`, requestOptions(config.token));
     const athleteStatsData = dataResponse.body;
     const activities = await getActivities(config);
     
@@ -34,7 +42,7 @@ async function getAthleteData(query) {
     return response;
 }
 
-const requestOptions = { headers: header(''), json: true};
+const requestOptions = token => {return { headers: header(token), json: true}};
 
 async function getActivities(config) {
     return new Promise((resolve, reject) => {
@@ -77,7 +85,7 @@ async function getActivities(config) {
   }
 
   function loadActivities(token, page, activities) {
-    return got.get(`${BASE_API}/athlete/activities?page=${page}&per_page=200`, requestOptions)
+    return got.get(`${BASE_API}/athlete/activities?page=${page}&per_page=200`, requestOptions(token))
       .then(({body: acts}) => {
         const combinedActivities = activities.concat(acts);
         return acts.length === 0 ? combinedActivities : loadActivities(token, page + 1, combinedActivities);

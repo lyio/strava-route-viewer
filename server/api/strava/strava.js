@@ -1,51 +1,42 @@
-const { render, redirect, header, cookie } = require('server').reply;
+const { render, redirect, header, cookie, json } = require('server').reply;
 const got = require('got');
 
 const STRAVA_API_URL = 'https://www.strava.com/api/v3/oauth';
-const CLIENT_ID = '';
-const CLIENT_SECRET = '';
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 const authorize = ({query}) => {
-  const oauthUrl = `${STRAVA_API_URL}/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000/api/strava/redirect&scope=activity:read_all,read`;
+  console.log(query);
+  const redirectUrl = query.redirect;
+  const oauthUrl = `${STRAVA_API_URL}/authorize?client_id=${CLIENT_ID}&approval_prompt=force&response_type=code&redirect_uri=${redirectUrl}&scope=activity:read_all,read`;
+  console.log(oauthUrl);
   return redirect(oauthUrl);
 };
 
-const redirectTarget = async ({ query }) => {
-  console.log(query);
-  const tokenQuery = new URLSearchParams(
-    [
-      ['client_id', CLIENT_ID],
-      ['client_secret', CLIENT_SECRET],
-      ['code', query.code],
-      ['grant_type', 'authorization_code']
-    ]
-  );
-  const body = {
+const token = async ({body}) => {
+  const { code } = JSON.parse(body);
+  const stravaRequestBody = {
     'client_id': CLIENT_ID,
     'client_secret': CLIENT_SECRET,
-    'code': query.code,
+    'code': code,
     'grant_type': 'authorization_code'
   };
-  console.log(body);
-  const authResponse = await got.post(`${STRAVA_API_URL}/token`, { body, form: true });
-  const asJson = JSON.parse(authResponse.body);
-  console.log(asJson);
-  return cookie('token', asJson.access_token).send(`
-    <html>
-    <body>
-      <p>Authorization successfull. This page can be closed.</p>
-      <p>${asJson.expires_at}</p>
-      <p>${asJson.access_token}</p>
-    </body>
-    </html>
-  `);
+  const authResponse = await got.post(`${STRAVA_API_URL}/token`, { body: stravaRequestBody, form: true });
+  const { token_type, expires_at, expires_in, access_token } = JSON.parse(authResponse.body);
+  console.log(access_token);
+  return json({
+    tokenType: token_type,
+    expiresAt: expires_at,
+    expiresIn: expires_in,
+    accessToken: access_token
+  });
 };
 
 const Strava = {
   AUTHORIZE_URL: '/api/strava/authorize',
-  REDIRECT_URL: '/api/strava/redirect',
+  REDIRECT_URL: '/api/strava/token',
   authorize,
-  redirect: redirectTarget
+  token
 };
 
 module.exports = Strava;
