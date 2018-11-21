@@ -2,14 +2,6 @@
 <button mat-raised-button (click)="startStravaWorkflow()">Login with Strava</button>
 <form [formGroup]="form" (ngSubmit)="displayRoutes(form.value)">
   <div class="form-group">
-    <mat-form-field floatLabel="'always'">
-      <mat-label>Strava token</mat-label>
-      <input matInput [formControl]="form.controls['token']" type="text"/>
-      <mat-hint>Enter the Strava API token</mat-hint>
-      <mat-error>This is required</mat-error>
-    </mat-form-field>
-  </div>
-  <div class="form-group">
     <mat-checkbox [formControl]="form.controls['includeRuns']" [labelPosition]="'before'">Runs:</mat-checkbox>
     <mat-checkbox [formControl]="form.controls['includeRides']" [labelPosition]="'before'">Rides:</mat-checkbox>
   </div>

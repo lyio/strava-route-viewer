@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Configuration } from '../model/configuration';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { stringify } from '@angular/compiler/src/util';
+import { ConfigApiService } from '../config-api.service';
+import { AUTHORIZE_URL } from '../api-url.constants';
 
 interface ConfigurationFormGroup {
   token: string;
@@ -39,12 +40,8 @@ export class ConfigurationComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(formBuilder: FormBuilder) {
-    this.configurationModel.activityDuration = 1800;
-    this.convertedDuration = this.configurationModel.activityDuration / 60;
-
-    this.form = formBuilder.group({
-      token: [this.configurationModel.token, Validators.compose([Validators.required, durationValidator])],
+  constructor(private formBuilder: FormBuilder, private configApiService: ConfigApiService) {
+    this.form = this.formBuilder.group({
       duration: [this.convertedDuration, durationValidator],
       includeRides: this.includeRides,
       includeRuns: this.includeRuns,
@@ -53,10 +50,19 @@ export class ConfigurationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.configApiService.getConfiguration().subscribe(config => {
+      this.configurationModel = config;
+      this.form = this.formBuilder.group({
+        duration: [this.configurationModel.activityDuration / 60, durationValidator],
+        includeRides: this.includeRides,
+        includeRuns: this.includeRuns,
+        count: [this.configurationModel.activityCount, Validators.required]
+      });
+    });
   }
 
   startStravaWorkflow() {
-    window.open('/api/strava/authorize');
+    window.open(AUTHORIZE_URL);
     return false;
   }
 
