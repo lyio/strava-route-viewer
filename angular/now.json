@@ -1,0 +1,7 @@
+{
+    "version": 2,
+    "alias": "route-printer.now.sh",
+    "routes": [
+        { "src": "/authorize", "dest": "/index.html" }
+    ]
+}

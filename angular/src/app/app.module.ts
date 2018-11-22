@@ -22,7 +22,6 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CanvasExporterComponent } from './canvas-exporter/canvas-exporter.component';
 import { AuthorizeComponent } from './authorize/authorize.component';
 import { MainComponent } from './main/main.component';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const routes: Routes = [
   { path: '', component: AppComponent },
@@ -55,7 +54,6 @@ const routes: Routes = [
     MatProgressSpinnerModule
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
     HttpClient,
     FormBuilder
   ],
