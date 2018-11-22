@@ -1,0 +1,12 @@
+.app-header {
+    height: 58px;
+}
+
+.app-header h3 {
+    text-align: center;
+}
+
+.app-header img {
+    float: right;
+    height: 24px;
+}

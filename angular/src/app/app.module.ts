@@ -22,6 +22,7 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CanvasExporterComponent } from './canvas-exporter/canvas-exporter.component';
 import { AuthorizeComponent } from './authorize/authorize.component';
 import { MainComponent } from './main/main.component';
+import { HeaderComponent } from './header/header.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
     ConfigurationComponent,
     CanvasExporterComponent,
     AuthorizeComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -62,7 +62,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   startStravaWorkflow() {
-    window.open(AUTHORIZE_URL);
+    window.open(AUTHORIZE_URL, '_self');
     return false;
   }
 

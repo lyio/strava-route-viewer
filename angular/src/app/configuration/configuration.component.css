@@ -15,3 +15,7 @@ button {
     width: 60%;
     margin: auto;
 }
+
+.btn-connect-strava {
+    cursor: pointer;
+}

@@ -1,5 +1,5 @@
 <h2>Configuration</h2>
-<button mat-raised-button (click)="startStravaWorkflow()">Login with Strava</button>
+<img (click)="startStravaWorkflow()" src="/assets/btn_strava_connect.svg" class="btn-connect-strava" alt="Connect to Strava"/>
 <form [formGroup]="form" (ngSubmit)="displayRoutes(form.value)">
   <div class="form-group">
     <mat-checkbox [formControl]="form.controls['includeRuns']" [labelPosition]="'before'">Runs:</mat-checkbox>
