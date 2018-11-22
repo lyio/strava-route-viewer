@@ -16,9 +16,9 @@ const api = [
 ];
 
 const corsExpress = require('cors')({
-    origin: ['http://localhost:4200', process.env.CLIENT_DOMAIN]
+    origin: process.env.CLIENT_DOMAIN || 'http://localhost:4200'
   });
-  
+
   // Make the express middleware compatible with server
 const cors = server.utils.modern(corsExpress);
 console.log('CORS Client domain: ' + process.env.CLIENT_DOMAIN);
