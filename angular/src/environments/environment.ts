@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   base_url: 'http://localhost:3000/api',
-  redirect_url: 'http://localhost:4200/authorize'
+  redirect_url: 'http://localhost:4200/#/authorize'
 };
 
 /*
