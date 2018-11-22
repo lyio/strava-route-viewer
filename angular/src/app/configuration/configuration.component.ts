@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Configuration } from '../model/configuration';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ConfigApiService } from '../config-api.service';
-import { AUTHORIZE_URL } from '../api-url.constants';
 
 interface ConfigurationFormGroup {
   token: string;
@@ -59,11 +58,6 @@ export class ConfigurationComponent implements OnInit {
         count: [this.configurationModel.activityCount, Validators.required]
       });
     });
-  }
-
-  startStravaWorkflow() {
-    window.open(AUTHORIZE_URL, '_self');
-    return false;
   }
 
   displayRoutes(form: ConfigurationFormGroup) {

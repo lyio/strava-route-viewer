@@ -3,6 +3,7 @@ import { Athlete } from './model/athlete';
 import { Observable } from 'rxjs';
 import { Configuration } from './model/configuration';
 import { ACTIVITIES_URL } from './api-url.constants';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,12 @@ export class StravaApiServiceService {
   private header() {
     return {
       headers: {
-        accessToken: `${JSON.parse(window.localStorage.getItem('auth')).accessToken}`
+        accessToken: `${this.authenticationService.getUser().accessToken}`
       }
     };
   }
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   getActivities(config: Configuration): Observable<Athlete> {
