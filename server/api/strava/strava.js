@@ -1,5 +1,6 @@
-const { render, redirect, header, cookie, json } = require('server').reply;
+const { redirect, json, status } = require('server').reply;
 const got = require('got');
+const env = require('dotenv').config();
 
 const STRAVA_API_URL = 'https://www.strava.com/api/v3/oauth';
 const CLIENT_ID = process.env.CLIENT_ID;
@@ -21,15 +22,21 @@ const token = async ({body}) => {
     'code': code,
     'grant_type': 'authorization_code'
   };
-  const authResponse = await got.post(`${STRAVA_API_URL}/token`, { body: stravaRequestBody, form: true });
-  const { token_type, expires_at, expires_in, access_token } = JSON.parse(authResponse.body);
-  console.log(access_token);
-  return json({
-    tokenType: token_type,
-    expiresAt: expires_at,
-    expiresIn: expires_in,
-    accessToken: access_token
-  });
+  try {
+    const authResponse = await got.post(`${STRAVA_API_URL}/token`, { body: stravaRequestBody, form: true });
+    const { token_type, expires_at, expires_in, access_token } = JSON.parse(authResponse.body);
+    console.log(access_token);
+    return json({
+      tokenType: token_type,
+      expiresAt: expires_at,
+      expiresIn: expires_in,
+      accessToken: access_token
+    });
+  } catch (err) {
+    console.log(err);
+    return status(500);
+
+  }
 };
 
 const Strava = {
