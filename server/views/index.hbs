@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+        <style>
+            body {
+                background-color: rgba(0,0,0,.05);
+                margin: 0px;
+            }
+
+            header {
+                background: url("header.png");
+                height: 400px;
+            }
+
+            .main-view {
+                width: 50%;
+                margin: auto;
+                margin-top: -150px;
+                background-color: white;
+                border-radius: 5px;
+                height: 100%;
+                text-align: center;
+                padding: 16px;
+                overflow: hidden;
+                font-family: 'Noto Sans TC', sans-serif;
+            }
+
+            .main-header {
+                padding: 24px;
+                border: solid red 1px;
+                border-radius: 5px;
+                height: 100%;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: 200px;
+                grid-column-gap: 24px;
+                font-size: 13px;
+            }
+
+            .grid > div {
+                text-align: justify;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+
+        </header>
+        <div class="main-view">
+            <div class="main-header">
+            <h2>
+                Route Printer
+            </h2>
+                <h4>
+                    Your Strava excercise data as art as inspired by 
+                    <a href='https://www.madewithsisu.com/'>
+                        www.madewithsisu.com
+                    </a>
+                </h4>
+                Create an image composed of your <a href="https://strava.com">Strava</a> excercise data and
+                Export the image as a page sized image file.
+
+                Visit the actual page at <a href={{domain}}>https://route-printer.now.sh</a>
+
+                This project is inspired by Sisu which provides this functionality in higher quality and actually sells prints of the routes.
+            </div>
+            <div class="grid">
+                <!-- Placeholder -->
+            </div>
+        </div>
+    </body>
+</html>

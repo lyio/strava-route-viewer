@@ -1,0 +1,9 @@
+.login-page {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.btn-connect-strava {
+    cursor: pointer;
+}

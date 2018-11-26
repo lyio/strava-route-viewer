@@ -7,7 +7,7 @@ const { get, post } = server.router;
 const { render } = server.reply;
 
 // Launch server with options and a couple of routes
-const home = get('/', ctx => render('index.pug'));
+const home = get('/', ctx => render('index', { domain: process.env.CLIENT_DOMAIN }));
 const api = [
     get(Strava.AUTHORIZE_URL, Strava.authorize),
     post(Strava.REDIRECT_URL, Strava.token),
@@ -16,7 +16,7 @@ const api = [
 ];
 
 const corsExpress = require('cors')({
-    origin: process.env.CLIENT_DOMAIN || 'http://localhost:4200'
+    origin: process.env.CLIENT_DOMAIN
   });
 
   // Make the express middleware compatible with server
@@ -24,4 +24,4 @@ const cors = server.utils.modern(corsExpress);
 console.log('CORS Client domain: ' + process.env.CLIENT_DOMAIN);
 
 const routes = [home, api];
-server({ security: { csrf: false } }, cors, ...routes);
+server({ security: { csrf: false }, engine: 'hbs' }, cors, ...routes);

@@ -23,10 +23,14 @@ import { CanvasExporterComponent } from './canvas-exporter/canvas-exporter.compo
 import { AuthorizeComponent } from './authorize/authorize.component';
 import { MainComponent } from './main/main.component';
 import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
+import { AuthenticatedGuard } from './authenticated.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
-  { path: '', component: AppComponent },
-  { path: 'authorize', component: AuthorizeComponent }
+  { path: '', component: AppComponent, canActivate: [AuthenticatedGuard] },
+  { path: 'authorize', component: AuthorizeComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
@@ -41,6 +45,8 @@ const routes: Routes = [
     CanvasExporterComponent,
     AuthorizeComponent,
     HeaderComponent,
+    LoginComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +62,7 @@ const routes: Routes = [
     MatProgressSpinnerModule
   ],
   providers: [
+    AuthenticatedGuard,
     HttpClient,
     FormBuilder
   ],
