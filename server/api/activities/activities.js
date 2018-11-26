@@ -53,6 +53,8 @@ async function getActivities(config) {
           .slice(0, config.activityCount)
           .map(a => {
             return {
+              id: a.id,
+              name: a.name,
               map: a.map,
               isRace: a.workout_type === 1
             };

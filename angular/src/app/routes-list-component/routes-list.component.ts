@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges } from
 import { Athlete } from '../model/athlete';
 import { MapToSvgMapperService } from '../map-to-svg-mapper.service';
 import { Activity } from '../model/acitvity';
+import { ActivityRoute } from '../model/activity-route';
 
 @Component({
   selector: 'app-routes-list',
@@ -16,7 +17,8 @@ export class RoutesListComponent implements OnInit, OnChanges {
   @Input()
   athlete: Athlete;
 
-  transformedRoutes: Array<any> = [];
+  transformedRoutes: Array<ActivityRoute> = [];
+  selectedRoute: ActivityRoute;
   private scaling = 1;
   height: number;
   width: number;
@@ -26,16 +28,20 @@ export class RoutesListComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
 
+  activityClicked(route: ActivityRoute) {
+    console.dir(route);
+    this.selectedRoute = route;
+  }
+
   ngOnChanges({routes, athlete}: SimpleChanges) {
     if (routes && routes.currentValue) {
-      this.transformedRoutes = routes.currentValue.map(route => {
+      this.transformedRoutes = routes.currentValue.map((route: Activity) => {
         return {
-          path: this.mapToSvgMapper.extract(route.map),
+          id: route.id,
+          svgPath: this.mapToSvgMapper.extract(route.map),
           isRace: route.isRace
         };
       });
-
-      // this.scaling = Math.abs(40 / this.transformedRoutes.length);
       this.height = 200 * this.scaling;
       this.width = 180 * this.scaling;
     }

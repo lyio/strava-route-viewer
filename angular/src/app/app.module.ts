@@ -26,6 +26,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { AuthenticatedGuard } from './authenticated.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { RouteDetailComponent } from './route-detail/route-detail.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent, canActivate: [AuthenticatedGuard] },
@@ -47,6 +48,7 @@ const routes: Routes = [
     HeaderComponent,
     LoginComponent,
     UserProfileComponent,
+    RouteDetailComponent,
   ],
   imports: [
     BrowserModule,

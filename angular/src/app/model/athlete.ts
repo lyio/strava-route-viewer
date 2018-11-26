@@ -1,4 +1,4 @@
-import { Activity } from "./acitvity";
+import { Activity } from './acitvity';
 
 export class Athlete {
     public name: string;

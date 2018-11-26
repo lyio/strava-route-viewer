@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivityRoute } from '../model/activity-route';
 
 @Component({
   selector: 'app-route',
@@ -8,13 +9,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class RouteComponent implements OnInit {
 
   @Input()
-  points: any;
+  activityRoute: ActivityRoute;
 
   viewBox;
 
   svgStyle;
 
   style: object;
+
+  path: string;
 
   @Input()
   height = 200;
@@ -25,12 +28,21 @@ export class RouteComponent implements OnInit {
   @Input()
   scale = 1.0;
 
+  @Output()
+  activityClicked = new EventEmitter<ActivityRoute>();
+
   constructor() { }
 
   ngOnInit() {
-    this.viewBox = this.calculateViewBox(this.points.path);
+    this.viewBox = this.calculateViewBox(this.activityRoute.svgPath);
 
-    this.svgStyle = this.getStyle(this.points);
+    this.path = this.activityRoute.svgPath.path;
+
+    this.svgStyle = this.getStyle(this.activityRoute);
+  }
+
+  clicked() {
+    this.activityClicked.emit(this.activityRoute);
   }
 
   private calculateViewBox(route) {
