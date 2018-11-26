@@ -1,0 +1,15 @@
+.authorize-component {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+}
+
+.authorize-component mat-spinner {
+    left: calc(50% - 50px);
+    margin-top: 50px;
+}

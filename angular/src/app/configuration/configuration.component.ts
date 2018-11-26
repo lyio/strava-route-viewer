@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Configuration } from '../model/configuration';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ConfigApiService } from '../config-api.service';
+import { AuthenticationService } from '../authentication.service';
 
 interface ConfigurationFormGroup {
   token: string;
@@ -28,6 +29,8 @@ export class ConfigurationComponent implements OnInit {
 
   public configurationModel: Configuration = new Configuration();
 
+  public userName: string;
+
   @Output()
   configuration = new EventEmitter<Configuration>();
 
@@ -39,8 +42,12 @@ export class ConfigurationComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private configApiService: ConfigApiService) {
-    this.form = this.formBuilder.group({
+  constructor(
+    private formBuilder: FormBuilder,
+    private configApiService: ConfigApiService,
+    private authenticationService: AuthenticationService) {
+
+      this.form = this.formBuilder.group({
       duration: [this.convertedDuration, durationValidator],
       includeRides: this.includeRides,
       includeRuns: this.includeRuns,
@@ -49,6 +56,9 @@ export class ConfigurationComponent implements OnInit {
   }
 
   ngOnInit() {
+    const { name } = this.authenticationService.getUser() || { name: ''};
+    this.userName = name;
+
     this.configApiService.getConfiguration().subscribe(config => {
       this.configurationModel = config;
       this.form = this.formBuilder.group({

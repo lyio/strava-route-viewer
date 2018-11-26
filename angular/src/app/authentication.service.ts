@@ -33,14 +33,17 @@ export class AuthenticationService {
 
   isAuthenticated(): boolean {
     const user: Auth = JSON.parse(window.localStorage.getItem(this.AUTH_KEY));
-    const date: number = Date.now();
-    console.log(`user.expiresAt: ${user.expiresAt} | date: ${date}`);
+    const dateInSeconds: number = Math.floor(Date.now() / 1000);
 
-    return user.accessToken !== null && date > user.expiresAt;
+    return user && user.accessToken !== null && user.expiresAt > dateInSeconds;
   }
 
-  public getUser(): Auth {
+  getUser(): Auth {
     return JSON.parse(window.localStorage.getItem(this.AUTH_KEY));
+  }
+
+  logout() {
+    window.localStorage.removeItem(this.AUTH_KEY);
   }
 
   constructor() { }
