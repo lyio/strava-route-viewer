@@ -24,9 +24,17 @@ const token = async ({body}) => {
   };
   try {
     const authResponse = await got.post(`${STRAVA_API_URL}/token`, { body: stravaRequestBody, form: true });
-    const { token_type, expires_at, expires_in, access_token } = JSON.parse(authResponse.body);
+    const {
+      token_type,
+      athlete,
+      expires_at,
+      expires_in,
+      access_token
+    } = JSON.parse(authResponse.body);
     console.log(access_token);
     return json({
+      profile: athlete.profile_medium,
+      name: `${athlete.firstname} ${athlete.lastname}`,
       tokenType: token_type,
       expiresAt: expires_at,
       expiresIn: expires_in,
@@ -35,7 +43,6 @@ const token = async ({body}) => {
   } catch (err) {
     console.log(err);
     return status(500);
-
   }
 };
 
