@@ -19,7 +19,7 @@
   "homepage": "https://github.com/lyio/strava-route-viewer#readme",
   "devDependencies": {
     "@angular/cli": "^7.0.6",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {}
 }
